@@ -22,6 +22,7 @@ void free_cube(char **l_map, t_mlx *mlx)
 		free(mlx->sky_color);
 	free_all(l_map);
 	free(mlx);
+	exit(1);
 }
 
 void	check_map_name(char *str)
@@ -79,6 +80,8 @@ void	check_map(char **av)
 		free_cube(l_map, mlx);
 	if (is_valid_map(l_map) == false)
 		free_cube(l_map, mlx);
+	mlx_func(l_map, mlx);
+	printf("valid");
 	free_cube(l_map, mlx);
 }
 

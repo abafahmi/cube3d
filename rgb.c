@@ -12,10 +12,11 @@ int	split_contain(char **split)
 
 void free_split(char **split)
 {
-    free(split[0]);
-    free(split[1]);
-    free(split[2]);
-    free(split);
+	int i = 0;
+
+	while (split[i])
+		free(split[i++]);
+	free(split);
 }
 
 t_rgb	*handle_rgb(char *str, char **l_map)
@@ -35,13 +36,34 @@ t_rgb	*handle_rgb(char *str, char **l_map)
 		if (split_contain(split))
 		{
 			color->r = ft_atoi(split[0]);
+			if (color->r < 0 || color->r > 255)
+			{
+				free_split(split);
+				free(color);
+				printf("R range\n");
+				return (NULL);
+			}
 			color->g = ft_atoi(split[1]);
+			if (color->g < 0 || color->g > 255)
+			{
+				free_split(split);
+				free(color);
+				printf("G range\n");
+				return (NULL);
+			}
 			color->b = ft_atoi(split[2]);
+			if (color->b < 0 || color->b > 255)
+			{
+				free_split(split);
+				free(color);
+				printf("B range\n");
+				return (NULL);
+			}
             free_split(split);
 			return (color);
 		}
-		return (NULL);
+        free_split(split);
+		free(color);
 	}
-	ft_error("RGB !!", l_map, NULL);
 	return (NULL);
 }
