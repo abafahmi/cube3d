@@ -11,7 +11,8 @@ MLX_INC = -I$(MLX_DIR)
 RM = rm -rf
 
 SRC = cub3d.c check_maps.c check_map_name.c is_validmap.c \
-	get_next_line/get_next_line.c get_next_line/get_next_line_utils.c rgb.c
+	get_next_line/get_next_line.c get_next_line/get_next_line_utils.c rgb.c \
+	mlx_func.c
 
 OBJS = $(SRC:.c=.o)
 
