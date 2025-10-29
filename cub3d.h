@@ -10,6 +10,10 @@
 # include <fcntl.h>
 # include <stdbool.h>
 
+#define TILE 32
+#define WIN_COLS 640
+#define WIN_ROWS 480
+
 typedef struct
 {
     int r;
@@ -21,12 +25,34 @@ typedef struct
 {
     t_rgb *floor_color;
     t_rgb *sky_color;
+	char **l_map;
 	void	*mlx;
 	void	*window;
-	int	x;
-	int y;
+	int	cam_x;
+	int cam_y;
+	int p_x;
+	int p_y;
+	int map_h;
+	int map_w;
 } t_mlx;
-
+/*
+typedef struct s_mlx {
+	t_rgb *floor_color;
+    t_rgb *sky_color;
+    void    *mlx;
+    void    *window;
+    void    *img;
+    char    *addr;
+    int     bpp;
+    int     line_len;
+    int     endian;
+    char    **l_map;
+    int     cam_x;
+    int     cam_y;
+    int     map_h;
+    int     map_w;
+}   t_mlx;
+*/
 typedef struct
 {
 	int s;

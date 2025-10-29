@@ -10,58 +10,79 @@ void mlx_error(char *msg, t_mlx *mlx, char **l_map)
 
 void    get_x_and_y(char **l_map, t_mlx *mlx)
 {
-    int i = 0;
-    int size = 0;
-
-    while(l_map[i])
-    {
-        int size_next = (int)ft_strlen(l_map[i]);
-        if (size < size_next)
-            size = size_next;
-        i++;
-    }
-    mlx->x = i;
-    mlx->y = size;
-}
-
-void mlx_func(char **l_map, t_mlx *mlx)
-{
     int x = 0;
-    int y;
-    int px, py;
-    int color;
-    int tile_size = 34;
-    
-    mlx->mlx = mlx_init();
-    if (!mlx->mlx)
-        mlx_error("mlx_int faild", mlx, l_map);
-    mlx->window = mlx_new_window(mlx->mlx, 20 * 34, 15 * 34, "cube3d_Cucurella");
-    if (!mlx->window)
-        mlx_error("mlx_new_window faild", mlx, l_map);
-    get_x_and_y(l_map, mlx);
-    while (x < mlx->x)
+    int y = 0;
+
+    while(l_map[x])
     {
-        y = 0;
-        while (y < mlx->y)
+        while (l_map[x][y])
         {
-            if (l_map[y][x] == 1)
-                color = 0xFF0000; // red
-            else
-                color = 0x0000FF; // blue
-            py = 0;
-            while (py < tile_size)
+            if (l_map[x][y] == 'E' || l_map[x][y] == 'S'
+            || l_map[x][y] == 'N' || l_map[x][y] == 'W')
             {
-                px = 0;
-                while (px < tile_size)
-                {
-                    mlx_pixel_put(mlx->mlx, mlx->window, x * tile_size + px, y * tile_size + py, color);
-                    px++;
-                }
-                py++;
+                mlx->p_x = x;
+                mlx->p_y = y;
+                break;
             }
             y++;
         }
         x++;
     }
+}
+
+void draw_map(char **l_map, t_mlx *mlx)
+{
+    int tile = TILE;
+    int color = 0;
+    int y = 0;
+    int x = 0;
+    while (l_map[x])
+    {
+        while(l_map[x][y])
+        {
+            if (l_map[x][y] == '1')
+                color = 0xFF0000;
+            else if (l_map[x][y] == '0')
+                color = 0x000000;
+            else
+                color = 0xFFFFFF;
+            mlx_pixel_put(mlx->mlx, mlx->window, x * tile, y * tile, color);
+            y++;
+        }
+        x++;
+    }
+}
+
+int handle_key(int key, t_mlx *mlx)
+{
+    if (key == 65307)
+        exit(0);
+    else if (key == 119 && map_bondries())
+        mlx->p_y--;
+    else if (key == 115)
+        mlx->p_y++;
+    else if (key == 97)
+        mlx->p_x--;
+    else if (key == 100)
+        mlx->p_x++;
+
+    mlx_clear_window(mlx->mlx, mlx->window);
+    draw_map(mlx->l_map, mlx);
+
+    return 0;
+}
+
+void mlx_func(char **l_map, t_mlx *mlx)
+{   
+    mlx->mlx = mlx_init();
+    if (!mlx->mlx)
+        mlx_error("mlx_int faild", mlx, l_map);
+    mlx->window = mlx_new_window(mlx->mlx, WIN_COLS, WIN_ROWS, "cube3d_Cucurella");
+    if (!mlx->window)
+        mlx_error("mlx_new_window faild", mlx, l_map);
+    mlx->l_map = l_map;
+    get_palyer_xy(l_map, mlx);
+    draw_map(l_map, mlx);
+    mlx_key_hook(mlx->window, handle_key, mlx);
     mlx_loop(mlx->mlx);
 }
