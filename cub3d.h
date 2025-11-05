@@ -11,8 +11,16 @@
 # include <stdbool.h>
 
 #define TILE 32
-#define WIN_COLS 640
-#define WIN_ROWS 480
+#define WIN_COLS 1000
+#define WIN_ROWS 900
+
+typedef enum
+{
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT
+} Direction;
 
 typedef struct
 {
@@ -65,7 +73,7 @@ typedef struct
 } t_dir;
 
 
-
+char **dup_the_map(char **l_map, t_mlx **mlx);
 t_rgb	*handle_rgb(char *str, char **l_map);
 void	free_cube(char **l_map, t_mlx *mlx);
 void	check_char(char *line);
@@ -73,7 +81,7 @@ void	ft_error1(char *msg, char *line);
 void	ft_error(char *msg, char **str, char **s2);
 void	mlx_func(char **l_map, t_mlx *mlx);
 bool    is_valid_map(char **map);
-bool	check_the_diractions(char **l_map, t_mlx **mlx);
+int	check_the_diractions(char **l_map, t_mlx **mlx);
 int             free_all(char **str_array);
 int             aaf_strnstr(char *big, char *little);
 int             characters(int c);

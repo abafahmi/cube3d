@@ -21,10 +21,47 @@ void free_cube(char **l_map, t_mlx *mlx)
 	if (mlx->sky_color)
 		free(mlx->sky_color);
 	free_all(l_map);
+	free_all(mlx->l_map);
 	free(mlx);
 	exit(1);
 }
+int get_len(char **l_map)
+{
+	int i = 0, j = 0;
+	while (l_map[i])
+	{
+		if (ft_strrchr(l_map[i], '1'))
+			j++;
+		i++;
+	}
+	return (j + 1);
+}
+char **dup_the_map(char **l_map, t_mlx **mlx)
+{
+	char **map = NULL;
+	int i = check_the_diractions(l_map, mlx) , j = 0;
+	int len = get_len(l_map);
+	map = malloc(sizeof(char *) * len + 1);
+	printf("%d\n", len);
+	if (!map)
+		return (NULL);
+	while (!ft_strrchr(l_map[i], '1'))
+		i++;
+	while (l_map[i])
+	{
+		if (ft_strrchr(l_map[i], '1'))
+		{
+			map[j] = ft_strdup(l_map[i]);
+			printf("%s\n", map[j]);
+			if (!map[j])
+				return (NULL);
+			j++;
+		}
+		i++;
+	}
+	return (map);
 
+}
 void	check_map_name(char *str)
 {
 	char	*s;
@@ -75,12 +112,16 @@ void	check_map(char **av)
 		free(mlx);
 		ft_error1("Error \n: !l_map", line);
 	}
+
 	free(line);
 	if (check_the_diractions(l_map, &mlx) == false)
 		free_cube(l_map, mlx);
 	if (is_valid_map(l_map) == false)
 		free_cube(l_map, mlx);
-	mlx_func(l_map, mlx);
+	mlx->l_map = dup_the_map(l_map, &mlx);
+	if (!mlx->l_map)
+		free_cube(l_map, mlx);
+	mlx_func(mlx->l_map, mlx);
 	printf("valid");
 	free_cube(l_map, mlx);
 }

@@ -23,7 +23,7 @@ void init_dir(t_dir *d)
 	d->c = 0;
 }
 
-bool	check_the_diractions(char **l_map, t_mlx **mlx)
+int	check_the_diractions(char **l_map, t_mlx **mlx)
 {
 	t_dir d;
 
@@ -50,14 +50,14 @@ bool	check_the_diractions(char **l_map, t_mlx **mlx)
 			{
 				(*mlx)->floor_color = handle_rgb(l_map[i], l_map);
 				if (!(*mlx)->floor_color)
-					return (false);
+					return (0);
 				d.f++;
 			}
 			else if (l_map[i][0] == 'C')
 			{
 				(*mlx)->sky_color =  handle_rgb(l_map[i], l_map);
 				if (!(*mlx)->sky_color)
-					return (false);
+					return (0);
 				d.c++;
 			}
 		}
@@ -66,8 +66,8 @@ bool	check_the_diractions(char **l_map, t_mlx **mlx)
 		i++;
 	}
 	if (d.e != 1 || d.n != 1 || d.s != 1 || d.w != 1 || d.c != 1 || d.f != 1)
-		return(false);
-	return (true);
+		return(0);
+	return (i);
 }
 
 void	check_char(char *line)
