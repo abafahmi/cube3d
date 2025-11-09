@@ -42,7 +42,6 @@ char **dup_the_map(char **l_map, t_mlx **mlx)
 	int i = check_the_diractions(l_map, mlx) , j = 0;
 	int len = get_len(l_map);
 	map = malloc(sizeof(char *) * len + 1);
-	printf("%d\n", len);
 	if (!map)
 		return (NULL);
 	while (!ft_strrchr(l_map[i], '1'))
@@ -52,13 +51,13 @@ char **dup_the_map(char **l_map, t_mlx **mlx)
 		if (ft_strrchr(l_map[i], '1'))
 		{
 			map[j] = ft_strdup(l_map[i]);
-			printf("%s\n", map[j]);
 			if (!map[j])
 				return (NULL);
 			j++;
 		}
 		i++;
 	}
+	map[j] = NULL;
 	return (map);
 
 }
