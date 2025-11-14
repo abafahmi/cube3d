@@ -38,21 +38,7 @@ void    get_x_and_y(char **l_map, t_mlx *mlx)
         x++;
     }
 }
-void draw_s(t_mlx *mlx, unsigned int color, int x, int y)
-{
-    int i = 0;
-    int j;
-    while (i < TILE)
-    {
-        j = 0;
-        while (j < TILE)
-        {
-            mlx_pixel_put(mlx->mlx, mlx->window, y * TILE + j, x * TILE + i, color);
-            j++;
-        }
-        i++;
-    }
-}
+
 
 void clear(t_mlx *mlx)
 {
@@ -70,28 +56,7 @@ void clear(t_mlx *mlx)
     }
 }
 
-void draw_map(char **l_map, t_mlx *mlx)
-{
-    unsigned int  color = 0;
-    int y;
-    int x = 0;
-    while (l_map[x])
-    {
-        y = 0;
-        while(l_map[x][y])
-        {
-            if (l_map[x][y] == '1')
-                color = 0x0000FF;
-            else if (l_map[x][y] == '0')
-                color = 0x00FF00;
-            else if (l_map[x][y] == 'N')
-                color = 0xFF0000;
-            draw_s(mlx, color, x, y);
-            y++;
-        }
-        x++;
-    }
-}
+
 
 void get_palyer_xy(char **l_map, t_mlx *mlx)
 {
@@ -100,16 +65,13 @@ void get_palyer_xy(char **l_map, t_mlx *mlx)
     while (l_map[i])
     {
         j = 0;
-            // printf("wtf\n");
         while (l_map[i][j])
         {
-            // printf("wtf\n");
             if (l_map[i][j] == 'W' || l_map[i][j] == 'E'
                 || l_map[i][j] == 'S' || l_map[i][j] == 'N')
             {
                 mlx->p_x = i;
                 mlx->p_y = j;
-                //printf("i = %d , j = %d\n", i,j);
                 return ;
             }
             j++;
@@ -142,31 +104,14 @@ int map_boundries(t_mlx *mlx, int i)
     }
     return (0);
 }
-void draw_mapv2(char **l_map, t_mlx *mlx)
+
+
+int    handle_cam(int key, t_mlx *mlx)
 {
-    unsigned int  color = 0;
-    int y;
-    int x = 0;
-    while (l_map[x])
-    {
-        y = 0;
-        while(l_map[x][y])
-        {
-            if (x == mlx->p_x && y == mlx->p_y)
-                color = 0xFF0000;
-            else if (l_map[x][y] == '1')
-                color = 0x0000FF;
-            else if (l_map[x][y] == '0')
-                color = 0x00FF00;
-            draw_s(mlx, color, x, y);
-            y++;
-        }
-        x++;
-    }
-}
-/*void    handle_cam(int key, t_mlx *mlx)
-{
-    if (key == 119)
+
+    if (key == 65307)
+        exit(0);
+    else if (key == 119)
         mlx->cam_x--;
     else if (key == 97)
         mlx->cam_y--;
@@ -174,10 +119,18 @@ void draw_mapv2(char **l_map, t_mlx *mlx)
         mlx->cam_x++;
     else if (key == 100)
         mlx->cam_y++;
-}*/
-
+    //if (mlx->cam_y != y || mlx->cam_x != x)
+    //{
+        clear(mlx);
+        draw_mapcam(mlx->l_map, mlx, &mlx->cam_x, &mlx->cam_y);
+      //  return (true);
+    //}
+    return (0);
+}
+/*
 int handle_key(int key, t_mlx *mlx)
 {
+    //int r = 0;
     if (key == 65307)
         exit(0);
     else if (key == 65363 && map_boundries(mlx, RIGHT) == 0) 
@@ -188,12 +141,13 @@ int handle_key(int key, t_mlx *mlx)
         mlx->p_x++;
     else if (key == 65362 && map_boundries(mlx, UP) == 0)
         mlx->p_x--;
-    //else
-        //handle_cam(key, mlx);
-    clear(mlx);
-    draw_mapv2(mlx->l_map, mlx);
+    else if (handle_cam(key, mlx) == false)
+    {
+        clear(mlx);
+        draw_mapv2(mlx->l_map, mlx);
+    }
     return 0;
-}
+}*/
 
 int render(t_mlx *mlx)
 {
@@ -213,6 +167,6 @@ void mlx_func(char **l_map, t_mlx *mlx)
     get_palyer_xy(l_map, mlx);
     draw_map(l_map, mlx);
    // mlx_loop_hook(mlx->mlx, &render, &mlx);
-    mlx_key_hook(mlx->window, handle_key, mlx);
+    mlx_key_hook(mlx->window, handle_cam, mlx);
     mlx_loop(mlx->mlx);
 }

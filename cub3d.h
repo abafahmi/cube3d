@@ -42,6 +42,8 @@ typedef struct
 	int p_y;
 	int map_h;
 	int map_w;
+    int map_x;
+    int map_y;
 } t_mlx;
 /*
 typedef struct s_mlx {
@@ -72,7 +74,10 @@ typedef struct
 
 } t_dir;
 
-
+void    draw_mapcam(char **l_map, t_mlx *mlx, int *i, int *z);
+void draw_s(t_mlx *mlx, unsigned int color, int x, int y);
+void draw_mapv2(char **l_map, t_mlx *mlx);
+void draw_map(char **l_map, t_mlx *mlx);
 char **dup_the_map(char **l_map, t_mlx **mlx);
 t_rgb	*handle_rgb(char *str, char **l_map);
 void	free_cube(char **l_map, t_mlx *mlx);
