@@ -57,7 +57,6 @@ void clear(t_mlx *mlx)
 }
 
 
-
 void get_palyer_xy(char **l_map, t_mlx *mlx)
 {
     int i = 0;
@@ -106,9 +105,8 @@ int map_boundries(t_mlx *mlx, int i)
 }
 
 
-int    handle_cam(int key, t_mlx *mlx)
+void    handle_cam(int key, t_mlx *mlx)
 {
-
     if (key == 65307)
         exit(0);
     else if (key == 119)
@@ -119,18 +117,10 @@ int    handle_cam(int key, t_mlx *mlx)
         mlx->cam_x++;
     else if (key == 100)
         mlx->cam_y++;
-    //if (mlx->cam_y != y || mlx->cam_x != x)
-    //{
-        clear(mlx);
-        draw_mapcam(mlx->l_map, mlx, &mlx->cam_x, &mlx->cam_y);
-      //  return (true);
-    //}
-    return (0);
 }
-/*
+
 int handle_key(int key, t_mlx *mlx)
 {
-    //int r = 0;
     if (key == 65307)
         exit(0);
     else if (key == 65363 && map_boundries(mlx, RIGHT) == 0) 
@@ -141,13 +131,12 @@ int handle_key(int key, t_mlx *mlx)
         mlx->p_x++;
     else if (key == 65362 && map_boundries(mlx, UP) == 0)
         mlx->p_x--;
-    else if (handle_cam(key, mlx) == false)
-    {
-        clear(mlx);
-        draw_mapv2(mlx->l_map, mlx);
-    }
+    else
+        handle_cam(key, mlx);
+    clear(mlx);
+    draw_mapcam(mlx->l_map, mlx);
     return 0;
-}*/
+}
 
 int render(t_mlx *mlx)
 {
@@ -165,8 +154,9 @@ void mlx_func(char **l_map, t_mlx *mlx)
         mlx_error("mlx_new_window faild", mlx, l_map);
     mlx->l_map = l_map;
     get_palyer_xy(l_map, mlx);
+    map_b_y(l_map, mlx);
     draw_map(l_map, mlx);
    // mlx_loop_hook(mlx->mlx, &render, &mlx);
-    mlx_key_hook(mlx->window, handle_cam, mlx);
+    mlx_key_hook(mlx->window, handle_key, mlx);
     mlx_loop(mlx->mlx);
 }

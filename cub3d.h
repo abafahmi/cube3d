@@ -40,8 +40,8 @@ typedef struct
 	int cam_y;
 	int p_x;
 	int p_y;
-	int map_h;
-	int map_w;
+	int map_bx;
+	int map_by;
     int map_x;
     int map_y;
 } t_mlx;
@@ -73,8 +73,8 @@ typedef struct
 	int c;
 
 } t_dir;
-
-void    draw_mapcam(char **l_map, t_mlx *mlx, int *i, int *z);
+void    map_b_y(char **map, t_mlx *mlx);
+void    draw_mapcam(char **l_map, t_mlx *mlx);
 void draw_s(t_mlx *mlx, unsigned int color, int x, int y);
 void draw_mapv2(char **l_map, t_mlx *mlx);
 void draw_map(char **l_map, t_mlx *mlx);
@@ -91,6 +91,7 @@ int             free_all(char **str_array);
 int             aaf_strnstr(char *big, char *little);
 int             characters(int c);
 int             diractions_f_c(char c);
-
+int             g_x(int x);
+int             g_y(int y);
 
 #endif
