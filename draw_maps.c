@@ -15,6 +15,7 @@ void draw_s(t_mlx *mlx, unsigned int color, int x, int y)
         while (j < TILE)
         {
             my_mlx_pixel_put(mlx, y * TILE + j, x * TILE + i, color);
+            mlx_pixel_put(mlx->mlx, mlx->window, y * TILE + j, x * TILE + i, color);
             j++;
         }
         i++;

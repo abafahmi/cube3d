@@ -39,6 +39,7 @@ void    get_x_and_y(char **l_map, t_mlx *mlx)
     }
 }
 
+
 void my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color)
 {
     char    *dst;
@@ -59,6 +60,7 @@ void clear(t_mlx *mlx)
         while (j < WIN_ROWS)
         {
             my_mlx_pixel_put(mlx, i, j, 0);
+            mlx_pixel_put(mlx->mlx, mlx->window, i, j, 0);
             j++;
         }
         i++;
