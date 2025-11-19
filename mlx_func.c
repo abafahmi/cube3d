@@ -45,9 +45,7 @@ void my_mlx_pixel_put(t_mlx *mlx, int x, int y, int color)
     char    *dst;
 
     dst = mlx->addr + (y * mlx->line_len + x * (mlx->bpp / 8));
-    printf("%s\n", dst);
     *(unsigned int*)dst = color;
-    printf("%s\n", dst);
 }
 
 void clear(t_mlx *mlx)
@@ -60,7 +58,7 @@ void clear(t_mlx *mlx)
         while (j < WIN_ROWS)
         {
             my_mlx_pixel_put(mlx, i, j, 0);
-            mlx_pixel_put(mlx->mlx, mlx->window, i, j, 0);
+            //mlx_pixel_put(mlx->mlx, mlx->window, i, j, 0);
             j++;
         }
         i++;
