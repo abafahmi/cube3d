@@ -9,12 +9,12 @@ void draw_s(t_mlx *mlx, unsigned int color, int x, int y)
         x *= -1;
     if (y < 0)
         y *= -1;
-    while (i < TILE)
+    while (i <= WIN_ROWS / mlx->map_bx)
     {
         j = 0;
-        while (j < TILE)
+        while (j <= WIN_ROWS / mlx->map_by)
         {
-            my_mlx_pixel_put(mlx, y * TILE + j, x * TILE + i, color);
+            my_mlx_pixel_put(mlx, y * WIN_ROWS / mlx->map_by + j, x * WIN_ROWS / mlx->map_bx + i, color);
             //mlx_pixel_put(mlx->mlx, mlx->window, y * TILE + j, x * TILE + i, color);
             j++;
         }
