@@ -15,12 +15,29 @@ void draw_s(t_mlx *mlx, unsigned int color, int x, int y)
         while (j <= WIN_ROWS / mlx->map_by)
         {
             my_mlx_pixel_put(mlx, y * WIN_ROWS / mlx->map_by + j, x * WIN_ROWS / mlx->map_bx + i, color);
-            //mlx_pixel_put(mlx->mlx, mlx->window, y * TILE + j, x * TILE + i, color);
             j++;
         }
         i++;
     }
 }
+
+void draw_sandrp(t_mlx *mlx, unsigned int color, int xi, int yi)
+{
+    double i = 0;
+    double x = (double)xi;
+    double y = (double)yi;
+    while (y > 0 && mlx->l_map[(int)x][(int)y] && mlx->l_map[(int)x][(int)y] != '1')
+    {
+        i = 0;
+        while (i < 30)
+        {
+             my_mlx_pixel_put(mlx, y * WIN_ROWS / mlx->map_by, x * WIN_ROWS / mlx->map_bx + i, color);
+             i += 0.1;
+        }
+        y--;
+    }
+}
+
 
 void draw_mapv2(char **l_map, t_mlx *mlx)
 {
@@ -33,7 +50,12 @@ void draw_mapv2(char **l_map, t_mlx *mlx)
         while(l_map[x][y])
         {
             if (x == mlx->p_x && y == mlx->p_y)
+            {
                 color = 0xFF0000;
+                draw_sandrp(mlx, color, x, y);
+                y++;
+                continue;
+            }
             else if (l_map[x][y] == '1')
                 color = 0x0000FF;
             else if (l_map[x][y] == '0')
@@ -77,11 +99,13 @@ void draw_map(char **l_map, t_mlx *mlx)
         while(l_map[x][y])
         {
             if (l_map[x][y] == '1')
+            {
                 color = 0x0000FF;
+            }
             else if (l_map[x][y] == '0')
-                color = 0x00FF00;
+            color = 0x00FF00;
             else if (l_map[x][y] == 'N')
-                color = 0xFF0000;
+            color = 0xFF0000;
             else
                 color = 0x000000;
             draw_s(mlx, color, x, y);
@@ -110,7 +134,7 @@ int	g_x(int x)
 	value = x;
 	return (value);
 }
-
+/*
 void    draw_mapcam(char **l_map, t_mlx *mlx)
 {
     int i = mlx->cam_x;
@@ -141,4 +165,4 @@ void    draw_mapcam(char **l_map, t_mlx *mlx)
         }
         i++;
     }
-}
+}*/

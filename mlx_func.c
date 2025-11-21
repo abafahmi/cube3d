@@ -113,7 +113,7 @@ int map_boundries(t_mlx *mlx, int i)
     return (0);
 }
 
-
+/*
 void    handle_cam(int key, t_mlx *mlx)
 {
     if (key == 65307)
@@ -126,7 +126,7 @@ void    handle_cam(int key, t_mlx *mlx)
         mlx->cam_x++;
     else if (key == 100)
         mlx->cam_y++;
-}
+}*/
 
 int handle_key(int key, t_mlx *mlx)
 {
@@ -140,10 +140,8 @@ int handle_key(int key, t_mlx *mlx)
         mlx->p_x++;
     else if (key == 65362 && map_boundries(mlx, UP) == 0)
         mlx->p_x--;
-    else
-        handle_cam(key, mlx);
     clear(mlx);
-    draw_mapcam(mlx->l_map, mlx);
+    draw_mapv2(mlx->l_map, mlx);
     mlx_put_image_to_window(mlx->mlx, mlx->window, mlx->img, 0, 0);
     return 0;
 }
@@ -168,6 +166,7 @@ void mlx_func(char **l_map, t_mlx *mlx)
     mlx->addr = mlx_get_data_addr(mlx->img, &mlx->bpp, &mlx->line_len, &mlx->endian);
     mlx->l_map = l_map;
     get_palyer_xy(l_map, mlx);
+    mlx->p_a = 90 * (M_PI / 180);
     map_b_y(l_map, mlx);
     draw_map(l_map, mlx);
     mlx_put_image_to_window(mlx->mlx, mlx->window, mlx->img, 0, 0);

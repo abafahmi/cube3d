@@ -8,6 +8,7 @@
 # include "get_next_line/get_next_line.h"
 # include "libft/libft.h"
 # include <fcntl.h>
+#include <math.h>
 # include <stdbool.h>
 
 #define TILE 32
@@ -45,6 +46,7 @@ typedef struct
 	int cam_y;
 	int p_x;
 	int p_y;
+    double p_a;
 	int map_bx;
 	int map_by;
     int map_x;
